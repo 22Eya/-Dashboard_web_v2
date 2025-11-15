@@ -5,45 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - Ventes E-commerce</title>
     <link rel="stylesheet" href="styles/main.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header class="Dashboard-header">
-        <div class="header-content">
-            <h1>Dashboard Ventes</h1>
-            <div class="header-info">
-                <span class="date">Tableau de bord - Novembre 2024</span>
-                <div class="user-info">
-                    <span>Admin</span>
-                    <div class="avatar">A</div>
-                </div>
+        <h1>Dashboard Ventes</h1>
+        <div class="header-info">
+            <!-- <span class="date" id="current-date">Tableau de bord - Novembre 2025</span> -->
+            <div class="user-info">
+                <span>Admin</span>
+                <div class="avatar">A</div>
             </div>
         </div>
     </header>
 
     <aside class="Dashboard-sidebar">
-        <div class="logo">
-            <span>📊</span>
-        </div>
+        <div class="logo">📊</div>
         <nav class="sidebar-nav">
             <ul>
-                <li class="nav-item active">
-                    <a href="#dashboard">📈 Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#ventes">💰 Ventes</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#produits">📦 Produits</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#clients">👥 Clients</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#commandes">🛒 Commandes</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#analytics">📊 Analytics</a>
-                </li>
+                <li class="nav-item active"><a href="#dashboard">📈 Dashboard</a></li>
+                <li class="nav-item"><a href="#ventes">💰 Ventes</a></li>
+                <li class="nav-item"><a href="#produits">📦 Produits</a></li>
+                <li class="nav-item"><a href="#clients">👥 Clients</a></li>
+                <li class="nav-item"><a href="#commandes">🛒 Commandes</a></li>
+                <li class="nav-item"><a href="#analytics">📊 Analytics</a></li>
             </ul>
         </nav>
         <button class="sidebar-toggle" type="button" aria-label="Toggle Sidebar">→</button>
@@ -52,160 +38,69 @@
     <main class="Dashboard-main">
         <!-- KPI Cards -->
         <div class="card kpi-card">
-            <div class="kpi-header">
-                <h3>Chiffre d'Affaires</h3>
-                <span class="kpi-icon">💰</span>
-            </div>
-            <div class="kpi-value">€127,450</div>
+            <div class="kpi-header"><h3>Chiffre d'Affaires</h3><span class="kpi-icon">💰</span></div>
+            <div class="kpi-value" id="revenue-value">€127,450</div>
             <div class="kpi-change positive">+12.5% vs mois dernier</div>
         </div>
 
         <div class="card kpi-card">
-            <div class="kpi-header">
-                <h3>Commandes</h3>
-                <span class="kpi-icon">🛒</span>
-            </div>
-            <div class="kpi-value">1,247</div>
+            <div class="kpi-header"><h3>Commandes</h3><span class="kpi-icon">🛒</span></div>
+            <div class="kpi-value" id="orders-value">1,247</div>
             <div class="kpi-change positive">+8.2% vs mois dernier</div>
         </div>
 
         <div class="card kpi-card">
-            <div class="kpi-header">
-                <h3>Nouveaux Clients</h3>
-                <span class="kpi-icon">👥</span>
-            </div>
-            <div class="kpi-value">324</div>
+            <div class="kpi-header"><h3>Nouveaux Clients</h3><span class="kpi-icon">👥</span></div>
+            <div class="kpi-value" id="clients-value">324</div>
             <div class="kpi-change negative">-2.1% vs mois dernier</div>
         </div>
 
         <div class="card kpi-card">
-            <div class="kpi-header">
-                <h3>Taux de conversion</h3>
-                <span class="kpi-icon">📈</span>
-            </div>
-            <div class="kpi-value">3.4%</div>
+            <div class="kpi-header"><h3>Taux de conversion</h3><span class="kpi-icon">📈</span></div>
+            <div class="kpi-value" id="conversion-value">3.4%</div>
             <div class="kpi-change positive">+0.5% vs mois dernier</div>
         </div>
 
         <!-- Graphique des ventes -->
         <div class="card chart-card">
             <h2>Évolution des Ventes Mensuelles</h2>
-            <div class="chart">
-                <div class="bar">
-                    <div style="height: 120px;" data-value="€45,200">45.2k</div>
-                    <span>Jan</span>
-                </div>
-                <div class="bar">
-                    <div style="height: 150px;" data-value="€52,100">52.1k</div>
-                    <span>Fév</span>
-                </div>
-                <div class="bar">
-                    <div style="height: 180px;" data-value="€61,800">61.8k</div>
-                    <span>Mar</span>
-                </div>
-                <div class="bar">
-                    <div style="height: 140px;" data-value="€48,900">48.9k</div>
-                    <span>Avr</span>
-                </div>
-                <div class="bar">
-                    <div style="height: 200px;" data-value="€68,300">68.3k</div>
-                    <span>Mai</span>
-                </div>
-                <div class="bar">
-                    <div style="height: 220px;" data-value="€74,500">74.5k</div>
-                    <span>Jun</span>
-                </div>
-            </div>
+            <canvas id="salesChart" height="200"></canvas>
         </div>
 
         <!-- Répartition des ventes par catégorie -->
         <div class="card chart-card">
             <h2>Ventes par Catégorie</h2>
-            <div class="pie-chart"></div>
-            <div class="legend">
-                <div><span style="background:#4f46e5;"></span> Électronique (35%)</div>
-                <div><span style="background:#06b6d4;"></span> Vêtements (25%)</div>
-                <div><span style="background:#7c3aed;"></span> Maison & Jardin (20%)</div>
-                <div><span style="background:#6366f1;"></span> Sports (12%)</div>
-                <div><span style="background:#8b5cf6;"></span> Livres (8%)</div>
-            </div>
+            <canvas id="categoryChart" height="200"></canvas>
         </div>
 
-        <!-- Tableau des top produits -->
+        <!-- Tableau interactif -->
         <div class="card table-card">
             <h2>Top 5 Produits du Mois</h2>
+            <div class="table-controls">
+                <label>
+                    Filtrer par catégorie :
+                    <select id="category-filter">
+                        <option value="all">Toutes</option>
+                        <option value="Électronique">Électronique</option>
+                        <option value="Vêtements">Vêtements</option>
+                        <option value="Maison">Maison</option>
+                        <option value="Sports">Sports</option>
+                    </select>
+                </label>
+            </div>
             <div class="table-container">
-                <table class="data-table">
+                <table class="data-table" id="products-table">
                     <thead>
                         <tr>
-                            <th>Produit</th>
-                            <th>Catégorie</th>
-                            <th>Ventes</th>
-                            <th>Revenue</th>
-                            <th>Stock</th>
+                            <th data-sort="product">Produit </th>
+                            <th data-sort="category">Catégorie </th>
+                            <th data-sort="sales">Ventes </th>
+                            <th data-sort="revenue">Revenue</th>
+                            <th data-sort="stock">Stock </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <div class="product-avatar">📱</div>
-                                    <span>iPhone 15 Pro</span>
-                                </div>
-                            </td>
-                            <td><span class="category-tag electronics">Électronique</span></td>
-                            <td>127</td>
-                            <td>€152,400</td>
-                            <td><span class="stock-status low">23</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <div class="product-avatar">👕</div>
-                                    <span>T-shirt Premium</span>
-                                </div>
-                            </td>
-                            <td><span class="category-tag clothing">Vêtements</span></td>
-                            <td>89</td>
-                            <td>€2,670</td>
-                            <td><span class="stock-status high">245</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <div class="product-avatar">💻</div>
-                                    <span>MacBook Air M3</span>
-                                </div>
-                            </td>
-                            <td><span class="category-tag electronics">Électronique</span></td>
-                            <td>56</td>
-                            <td>€78,400</td>
-                            <td><span class="stock-status medium">45</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <div class="product-avatar">🏠</div>
-                                    <span>Canapé Nordique</span>
-                                </div>
-                            </td>
-                            <td><span class="category-tag home">Maison</span></td>
-                            <td>34</td>
-                            <td>€27,200</td>
-                            <td><span class="stock-status medium">12</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <div class="product-avatar">⚽</div>
-                                    <span>Ballon Nike Pro</span>
-                                </div>
-                            </td>
-                            <td><span class="category-tag sports">Sports</span></td>
-                            <td>78</td>
-                            <td>€3,120</td>
-                            <td><span class="stock-status high">156</span></td>
-                        </tr>
+                    <tbody id="products-table-body">
+                        <!-- Rempli par JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -214,15 +109,10 @@
 
     <footer class="Dashboard-footer">
         <div class="footer-content">
-            <p>&copy; 2024 Dashboard Admin - Système de gestion des ventes</p>
-            <div class="footer-links">
-                <span>Version 1.0</span>
-                <span>•</span>
-                <span>Support</span>
-                <span>•</span>
-                <span>Documentation</span>
-            </div>
+            <p>&copy; 2025 Dashboard Admin - Système de gestion des ventes</p>
         </div>
     </footer>
+
+    <script type="module" src="scripts/dashboard.js"></script>
 </body>
 </html>
