@@ -1,10 +1,46 @@
-export let productsData = [
-  { id: 1, name: "iPhone 15 Pro", category: "Électronique", sales: 127, revenue: 152400, stock: 23, icon: "📱" },
-  { id: 2, name: "T-shirt", category: "Vêtements", sales: 89, revenue: 2670, stock: 245, icon: "👕" },
-  { id: 3, name: "MacBook Air M3", category: "Électronique", sales: 56, revenue: 78400, stock: 45, icon: "💻" },
-  { id: 4, name: "Canapé Nordique", category: "Maison", sales: 34, revenue: 27200, stock: 12, icon: "🏠" },
-  { id: 5, name: "Ballon", category: "Sports", sales: 78, revenue: 3120, stock: 156, icon: "⚽" },
-];
+// data.js
+export let productsData = [];
+export let salesData = [];
 
-export let currentSort = { key: 'sales', order: 'desc' };
-export let currentFilter = 'all';
+// Charger produits
+export async function loadProducts() {
+    try {
+        const res = await fetch('./api/get_products.php');
+        const data = await res.json();
+        if (data.success) productsData = data.data;
+        else productsData = [];
+        return productsData;
+    } catch (e) {
+        console.error(e);
+        productsData = [];
+        return [];
+    }
+}
+
+// Charger ventes
+export async function loadSales() {
+    try {
+        const res = await fetch('./api/get_sales.php');
+        const data = await res.json();
+        if (data.success) salesData = data.data;
+        else salesData = [];
+        return salesData;
+    } catch (e) {
+        console.error(e);
+        salesData = [];
+        return [];
+    }
+}
+
+// Export CSV
+export function exportToCSV() {
+    if (!productsData.length) return alert('Aucune donnée à exporter');
+    const headers = ['ID','Nom','Catégorie','Prix','Stock','Ventes'];
+    const rows = productsData.map(p => [p.id,p.name,p.category,p.price,p.stock,'--']);
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `produits_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+}

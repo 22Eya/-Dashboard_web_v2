@@ -2,6 +2,11 @@ import { productsData, currentSort, currentFilter } from './data.js';
 
 export function renderTable() {
     const tableBody = document.getElementById('products-table-body');
+    
+    if (!tableBody) {
+        console.error('❌ Table body not found');
+        return;
+    }
 
     // Filtrer
     let filtered = currentFilter === 'all' 
@@ -21,7 +26,7 @@ export function renderTable() {
         <tr>
             <td>
                 <div class="product-cell">
-                    <div class="product-avatar">${p.icon}</div>
+                    <div class="product-avatar">${p.icon || '📦'}</div>
                     <span>${p.name}</span>
                 </div>
             </td>

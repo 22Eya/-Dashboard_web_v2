@@ -425,3 +425,37 @@ th[data-sort]:hover {
     grid-column: 1 / -1;
   }
 }
+/* Boutons Export et Déconnexion */
+.btn-export, .btn-logout {
+    padding: 0.5rem 1rem;
+    margin-left: 0.75rem;
+    background: #1e40af;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-export:hover, .btn-logout:hover {
+    background: #1e3a8a;
+}
+
+.btn-logout {
+    background: #dc2626;
+}
+
+.btn-logout:hover {
+    background: #b91c1c;
+}
+
+.table-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
